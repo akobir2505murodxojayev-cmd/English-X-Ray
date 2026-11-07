@@ -1,0 +1,44 @@
+'use client'
+import {useCallback,useEffect,useState,type FormEvent} from 'react'
+import Link from 'next/link'
+import {ArrowLeft,Shield} from 'lucide-react'
+import {Logo} from '../brand'
+import {rubrics,skills,skillNames,type Question,type Result} from '../../lib/engine'
+import {labels,request,type Material} from '../../lib/ui'
+
+type Student={id:string;full_name:string;phone_number?:string;education_category?:string;deletion_requested_at?:string}
+type AdminData={role:string;students:Student[];attempts:Array<{id:string;user_id:string;result:Result;status:string;submitted_at:string}>;plans:Array<{id:string;user_id:string;learning_tasks:Array<{week:number;title:string;completed_at?:string}>}>;enrollment:Array<{id:string;name:string;phone:string;contact_method:string;status:string;enrollment_status_history:Array<{status:string;created_at:string}>}>;questions:Array<Question&{active:boolean}>;materials:Array<Material&{active:boolean}>;mentors:Array<{user_id:string;users:{full_name:string}}> ;assignments:Array<{student_id:string;mentor_id:string}>}
+type Review={question:Question;answer?:string;url?:string;previous?:string}
+const tabLabels=['O‘quvchilar','Natijalar','O‘quv rejalar','Arizalar','Savollar','Materiallar']
+export default function Admin(){
+ const [data,setData]=useState<AdminData|null>(null),[error,setError]=useState(''),[notice,setNotice]=useState(''),[tab,setTab]=useState(0),[search,setSearch]=useState(''),[review,setReview]=useState<{id:string;items:Review[]}|null>(null),[busy,setBusy]=useState(false),[editing,setEditing]=useState<{type:'question-save'|'material-save';data:string}|null>(null)
+ const load=useCallback(async()=>{setData(await request<AdminData>('admin'))},[])
+ const fail=(e:unknown)=>setError(e instanceof Error?e.message:'Xatolik yuz berdi.')
+ useEffect(()=>{let active=true;void request<AdminData>('admin').then(value=>{if(active)setData(value)}).catch(e=>{if(active)fail(e)});return()=>{active=false}},[])
+ async function save(action:string,body:unknown){
+  setBusy(true);setError('');setNotice('')
+  try{await request(action,body);await load();setNotice('O‘zgarish saqlandi.');return true}catch(e){fail(e);return false}finally{setBusy(false)}
+ }
+ function edit(type:'question-save'|'material-save',value:unknown){setEditing({type,data:JSON.stringify(value,null,2)});setNotice('');setError('')}
+ async function saveReview(e:FormEvent<HTMLFormElement>,id:string,skill:'writing'|'speaking'){
+  e.preventDefault()
+  const form=new FormData(e.currentTarget)
+  if(await save('review',{id,skill,rubric:rubrics[skill].map((_,i)=>Number(form.get('rubric'+i))),feedback:form.get('feedback')}))setReview(null)
+ }
+ const students=data?.students.filter(s=>s.full_name.toLowerCase().includes(search.toLowerCase()))??[]
+ return <main className="admin-shell"><header className="top"><span><Link href="/" className="header-button" aria-label="Ilovaga qaytish"><ArrowLeft/></Link></span><Logo/><span><Shield size={20}/></span></header><h1>Sandbox LC boshqaruvi</h1>{error&&<p className="banner error" role="alert">{error}</p>}{notice&&<p className="banner success">{notice}</p>}
+ {!data&&!error&&<p>Yuklanmoqda…</p>}
+ {data&&<><div className="pills">{tabLabels.slice(0,data.role==='mentor'?3:6).map((x,i)=><button className={'pill '+(i===tab?'active':'')} onClick={()=>{setTab(i);setEditing(null);setReview(null)}} key={x}>{x}</button>)}</div>
+ {tab===0&&<><div className="skill-grid"><div className="card metric"><b>{data.students.length}</b> O‘quvchi</div><div className="card metric"><b>{data.attempts.length}</b> Topshirilgan test</div></div><div className="card admin-card"><label>Ism bo‘yicha qidirish<input value={search} onChange={e=>setSearch(e.target.value)}/></label><div className="table-wrap"><table><thead><tr><th>Ism</th><th>Toifa</th>{data.role!=='mentor'&&<><th>Telefon</th><th>Mentor</th></>}</tr></thead><tbody>{students.map(s=><tr key={s.id}><td>{s.full_name}{s.deletion_requested_at&&<div className="error"><p>Hisobni o‘chirish so‘ralgan</p>{data.role==='super_admin'&&<button disabled={busy} className="pill" onClick={()=>{if(window.confirm('Hisobni butunlay o‘chirasizmi?'))void save('erase',{id:s.id})}}>Hisobni o‘chirish</button>}</div>}</td><td>{s.education_category??'—'}</td>{data.role!=='mentor'&&<><td>{s.phone_number??'—'}</td><td><select aria-label={s.full_name+' mentori'} disabled={busy} value={data.assignments.find(a=>a.student_id===s.id)?.mentor_id??''} onChange={e=>void save('assignment',{student:s.id,mentor:e.target.value||null})}><option value="">Biriktirilmagan</option>{data.mentors.map(m=><option key={m.user_id} value={m.user_id}>{m.users?.full_name??m.user_id}</option>)}</select></td></>}</tr>)}</tbody></table></div>{!students.length&&<p>O‘quvchi topilmadi.</p>}</div></>}
+ {tab===1&&<><div className="admin-grid">{data.attempts.map(a=><div key={a.id} className="card admin-card"><h2>{data.students.find(s=>s.id===a.user_id)?.full_name??'O‘quvchi'}</h2><p>{a.result?.level??'—'} · {a.result?.score??'—'}% · {a.status==='review'?'Baholash kutilmoqda':'Yakunlangan'}</p><p className="small">{skills.map(s=>skillNames[s]+' '+(a.result?.skills[s].score??'—')).join(' · ')}</p>{a.result&&(a.result.skills.writing.items.length>0||a.result.skills.speaking.items.length>0)&&<button className="pill" onClick={()=>void request<Review[]>('review',undefined,a.id).then(items=>setReview({id:a.id,items})).catch(fail)}>Ochiq javoblarni ko‘rish</button>}</div>)}</div>{!data.attempts.length&&<p>Test natijalari yo‘q.</p>}{review&&<div className="admin-grid">{review.items.map(r=>{
+  const skill=r.question.kind as 'writing'|'speaking'
+  return <form className="card form" key={review.id+r.question.id} onSubmit={e=>void saveReview(e,review.id,skill)}><h2>{skillNames[skill]}</h2><p>{r.question.prompt}</p>{r.answer&&<p>{r.answer}</p>}{r.url&&<audio controls src={r.url}/>}<p className="small">0 — dalil yo‘q, 1 — juda cheklangan, 2 — cheklangan, 3 — qisman, 4 — yaxshi, 5 — izchil va aniq.</p>{rubrics[skill].map((x,i)=><label key={x}>{x}<input type="number" name={'rubric'+i} min="0" max="5" required/></label>)}<label>Tavsiyalar<textarea name="feedback" required maxLength={1600} defaultValue={r.previous}/></label><button className="pill active" disabled={busy}>Bahoni saqlash</button></form>
+ })}</div>}</>}
+ {tab===2&&<div className="admin-grid">{data.plans.map(p=><div className="card admin-card" key={p.id}><h2>{data.students.find(s=>s.id===p.user_id)?.full_name??'O‘quvchi'}</h2><p>{p.learning_tasks.filter(t=>t.completed_at).length} / {p.learning_tasks.length} vazifa</p>{p.learning_tasks.sort((a,b)=>a.week-b.week).map(t=><p key={t.week}>{t.completed_at?'✓':'○'} {t.week}-hafta · {t.title}</p>)}</div>)}{!data.plans.length&&<p>O‘quv rejalar hali yo‘q.</p>}</div>}
+ {tab===3&&<div className="admin-grid">{data.enrollment.map(a=><div className="card admin-card" key={a.id}><h2>{a.name}</h2><p>{a.phone} · {a.contact_method}</p><label>Ariza holati<select value={a.status} disabled={busy} onChange={e=>void save('enrollment-status',{id:a.id,status:e.target.value})}>{Object.entries(labels).map(([id,l])=><option value={id} key={id}>{l}</option>)}</select></label><details><summary>Holat tarixi</summary>{a.enrollment_status_history.map((h,i)=><p key={i}>{new Date(h.created_at).toLocaleString('uz-UZ')} · {labels[h.status]}</p>)}</details></div>)}{!data.enrollment.length&&<p>Kurs arizalari hali yo‘q.</p>}</div>}
+ {tab===4&&<><button className="pill active" onClick={()=>edit('question-save',{id:'',skill:'grammar',kind:'single',difficulty:2,topic:'',prompt:'',options:['',''],key:[''],stimulus:null,audio:null,active:true})}>Yangi savol</button><div className="admin-grid">{data.questions.map(q=><div className="card admin-card" key={q.id}><b>{q.id} · {skillNames[q.skill]} · {q.difficulty} · {q.active?'Faol':'Arxiv'}</b><p>{q.prompt}</p><button className="pill" onClick={()=>edit('question-save',q)}>Tahrirlash</button></div>)}</div></>}
+ {tab===5&&<><button className="pill active" onClick={()=>edit('material-save',{id:'',category:'writing',title:'',description:'',kind:'text',content:'',asset_path:null,active:true})}>Yangi material</button><div className="admin-grid">{data.materials.map(m=><div className="card admin-card" key={m.id}><b>{m.title}</b><p>{m.description}</p><button className="pill" onClick={()=>edit('material-save',m)}>Tahrirlash</button></div>)}</div></>}
+ {editing&&<form className="card form" onSubmit={async e=>{e.preventDefault();try{if(await save(editing.type,JSON.parse(editing.data)))setEditing(null)}catch{setError('JSON formatini tekshiring.')}}}><label>Ma’lumotlar (JSON)<textarea rows={13} value={editing.data} onChange={e=>setEditing({...editing,data:e.target.value})}/></label><div className="pills"><button className="pill active" disabled={busy}>Saqlash</button><button className="pill" type="button" onClick={()=>setEditing(null)}>Bekor qilish</button></div></form>}
+ </>}
+ </main>
+}

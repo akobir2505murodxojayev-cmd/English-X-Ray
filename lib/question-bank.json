@@ -1,0 +1,610 @@
+[
+  {
+    "id": "g1",
+    "skill": "grammar",
+    "difficulty": 1,
+    "topic": "To be",
+    "prompt": "Maya ___ a student.",
+    "options": [
+      "am",
+      "is",
+      "are",
+      "be"
+    ],
+    "key": [
+      "is"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "g2",
+    "skill": "grammar",
+    "difficulty": 1,
+    "topic": "Present Simple",
+    "prompt": "My brother ___ football every Saturday.",
+    "options": [
+      "play",
+      "plays",
+      "playing",
+      "is play"
+    ],
+    "key": [
+      "plays"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "g3",
+    "skill": "grammar",
+    "difficulty": 2,
+    "topic": "Past Simple",
+    "prompt": "I ___ the museum last Sunday.",
+    "options": [
+      "visit",
+      "visited",
+      "have visited",
+      "visiting"
+    ],
+    "key": [
+      "visited"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "g4",
+    "skill": "grammar",
+    "difficulty": 2,
+    "topic": "Countable nouns",
+    "prompt": "Choose TWO sentences with correct quantifiers.",
+    "options": [
+      "We need some apples.",
+      "There are much books.",
+      "How many tickets do you need?",
+      "I have a few water."
+    ],
+    "key": [
+      "We need some apples.",
+      "How many tickets do you need?"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "multiple",
+    "active": true
+  },
+  {
+    "id": "g5",
+    "skill": "grammar",
+    "difficulty": 3,
+    "topic": "Present Perfect",
+    "prompt": "I have lived in Tashkent ___ 2020.",
+    "options": null,
+    "key": [
+      "since"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "blank",
+    "active": true
+  },
+  {
+    "id": "g6",
+    "skill": "grammar",
+    "difficulty": 3,
+    "topic": "Conditionals",
+    "prompt": "If it rains tomorrow, we ___ at home.",
+    "options": [
+      "stayed",
+      "will stay",
+      "had stayed",
+      "would have stayed"
+    ],
+    "key": [
+      "will stay"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "g7",
+    "skill": "grammar",
+    "difficulty": 4,
+    "topic": "Past Perfect",
+    "prompt": "By the time the talk began, most people ___.",
+    "options": [
+      "left",
+      "had left",
+      "have left",
+      "are leaving"
+    ],
+    "key": [
+      "had left"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "g8",
+    "skill": "grammar",
+    "difficulty": 5,
+    "topic": "Inversion",
+    "prompt": "Not until the results arrived ___ the scale of the problem.",
+    "options": [
+      "we understood",
+      "did we understand",
+      "we had understood",
+      "understood we"
+    ],
+    "key": [
+      "did we understand"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v1",
+    "skill": "vocabulary",
+    "difficulty": 1,
+    "topic": "Everyday verbs",
+    "prompt": "Which verb means to get something by paying money?",
+    "options": [
+      "buy",
+      "bring",
+      "lend",
+      "leave"
+    ],
+    "key": [
+      "buy"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v2",
+    "skill": "vocabulary",
+    "difficulty": 1,
+    "topic": "Daily routine",
+    "prompt": "I usually ___ breakfast at seven.",
+    "options": [
+      "make",
+      "do",
+      "get on",
+      "go"
+    ],
+    "key": [
+      "make"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v3",
+    "skill": "vocabulary",
+    "difficulty": 2,
+    "topic": "Travel",
+    "prompt": "Which word means a single trip from one place to another?",
+    "options": [
+      "journey",
+      "luggage",
+      "platform",
+      "schedule"
+    ],
+    "key": [
+      "journey"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v4",
+    "skill": "vocabulary",
+    "difficulty": 2,
+    "topic": "Opposites",
+    "prompt": "The opposite of narrow is ___.",
+    "options": [
+      "deep",
+      "wide",
+      "smooth",
+      "short"
+    ],
+    "key": [
+      "wide"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v5",
+    "skill": "vocabulary",
+    "difficulty": 3,
+    "topic": "Collocations",
+    "prompt": "We need to ___ a decision by Friday.",
+    "options": [
+      "take up",
+      "make",
+      "do",
+      "put"
+    ],
+    "key": [
+      "make"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v6",
+    "skill": "vocabulary",
+    "difficulty": 3,
+    "topic": "Context",
+    "prompt": "The shop is closed temporarily. What does temporarily mean?",
+    "options": [
+      "For a limited time",
+      "On purpose",
+      "Without warning",
+      "For good"
+    ],
+    "key": [
+      "For a limited time"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v7",
+    "skill": "vocabulary",
+    "difficulty": 4,
+    "topic": "Word meaning",
+    "prompt": "The plan is feasible. Which word is closest in meaning?",
+    "options": [
+      "Practical",
+      "Expensive",
+      "Unusual",
+      "Necessary"
+    ],
+    "key": [
+      "Practical"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "v8",
+    "skill": "vocabulary",
+    "difficulty": 5,
+    "topic": "Register",
+    "prompt": "Which word best fits: The findings are preliminary and should be interpreted with ___.",
+    "options": [
+      "caution",
+      "relief",
+      "certainty",
+      "indifference"
+    ],
+    "key": [
+      "caution"
+    ],
+    "stimulus": null,
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "r1",
+    "skill": "reading",
+    "difficulty": 1,
+    "topic": "Aniq ma’lumot",
+    "prompt": "When does Sam start on Wednesdays?",
+    "options": [
+      "Nine",
+      "Ten",
+      "Five",
+      "Six"
+    ],
+    "key": [
+      "Ten"
+    ],
+    "stimulus": "Sam works at a library. On Wednesdays he starts at ten instead of nine. The library closes at six.",
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "r2",
+    "skill": "reading",
+    "difficulty": 2,
+    "topic": "Taqqoslash",
+    "prompt": "What is true about Train B?",
+    "options": [
+      "It costs more.",
+      "It arrives first.",
+      "It leaves first.",
+      "It takes longer."
+    ],
+    "key": [
+      "It arrives first."
+    ],
+    "stimulus": "Train A leaves at 11:20 and arrives at 12:10. Train B leaves later but arrives at 12:05. Both cost the same.",
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "r3",
+    "skill": "reading",
+    "difficulty": 3,
+    "topic": "Sabab va natija",
+    "prompt": "What changed the club’s plan?",
+    "options": [
+      "A building delay",
+      "Members’ preferences",
+      "Higher rent",
+      "A staff complaint"
+    ],
+    "key": [
+      "Members’ preferences"
+    ],
+    "stimulus": "The sports club was going to build a larger gym. After a survey showed that most members wanted longer opening hours, the club decided to hire more evening staff instead.",
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "r4",
+    "skill": "reading",
+    "difficulty": 3,
+    "topic": "Shartni aniqlash",
+    "prompt": "What condition must be met?",
+    "options": [
+      "Costs must fall in summer.",
+      "Winter use must stay high.",
+      "The trial must be repeated.",
+      "Cyclists must pay for maintenance."
+    ],
+    "key": [
+      "Winter use must stay high."
+    ],
+    "stimulus": "The new cycle lane was popular during the trial. However, the council will keep it only if winter usage remains high, since maintenance costs increase sharply in cold weather.",
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "r5",
+    "skill": "reading",
+    "difficulty": 4,
+    "topic": "Muallif pozitsiyasi",
+    "prompt": "Why does the author mention motivation?",
+    "options": [
+      "To identify a possible alternative explanation",
+      "To prove the sessions work",
+      "To report a measured outcome",
+      "To describe the researchers’ schedules"
+    ],
+    "key": [
+      "To identify a possible alternative explanation"
+    ],
+    "stimulus": "A pilot study found that people remembered more words after short, frequent sessions. The participants chose their own schedules, however, so differences in motivation could account for some of the effect.",
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "r6",
+    "skill": "reading",
+    "difficulty": 5,
+    "topic": "Xulosa chiqarish",
+    "prompt": "What distinction does the writer draw?",
+    "options": [
+      "Digital records are less reliable than paper records.",
+      "Wider access does not guarantee broader representation.",
+      "The oldest documents were written for public use.",
+      "The archive needs fewer published sources."
+    ],
+    "key": [
+      "Wider access does not guarantee broader representation."
+    ],
+    "stimulus": "Although the archive is promoted as comprehensive, its earliest records largely reflect the views of people who could afford to publish. Digitising those records has widened access while preserving that original imbalance.",
+    "audio": null,
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "l1",
+    "skill": "listening",
+    "difficulty": 1,
+    "topic": "Tinglab tushunish",
+    "prompt": "Where will the club meet?",
+    "options": [
+      "Room 6",
+      "Room 10",
+      "Room 12",
+      "Room 20"
+    ],
+    "key": [
+      "Room 12"
+    ],
+    "stimulus": null,
+    "audio": "/audio/l1.mp3",
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "l2",
+    "skill": "listening",
+    "difficulty": 2,
+    "topic": "Tinglab tushunish",
+    "prompt": "What has changed?",
+    "options": [
+      "The price",
+      "The meeting point",
+      "The day",
+      "The time"
+    ],
+    "key": [
+      "The meeting point"
+    ],
+    "stimulus": null,
+    "audio": "/audio/l2.mp3",
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "l3",
+    "skill": "listening",
+    "difficulty": 3,
+    "topic": "Tinglab tushunish",
+    "prompt": "You will hear a conversation about a ____.",
+    "options": [
+      "A new apartment",
+      "A job interview",
+      "A language course",
+      "A travel plan"
+    ],
+    "key": [
+      "A job interview"
+    ],
+    "stimulus": null,
+    "audio": "/audio/l3.mp3",
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "l4",
+    "skill": "listening",
+    "difficulty": 3,
+    "topic": "Tinglab tushunish",
+    "prompt": "When is a payment needed?",
+    "options": [
+      "When you join the class",
+      "When you download the workbook",
+      "When you want a printed workbook",
+      "When you book an online class"
+    ],
+    "key": [
+      "When you want a printed workbook"
+    ],
+    "stimulus": null,
+    "audio": "/audio/l4.mp3",
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "l5",
+    "skill": "listening",
+    "difficulty": 4,
+    "topic": "Tinglab tushunish",
+    "prompt": "What did the speaker miss?",
+    "options": [
+      "The questions",
+      "The whole presentation",
+      "The recording",
+      "The train connection"
+    ],
+    "key": [
+      "The questions"
+    ],
+    "stimulus": null,
+    "audio": "/audio/l5.mp3",
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "l6",
+    "skill": "listening",
+    "difficulty": 5,
+    "topic": "Tinglab tushunish",
+    "prompt": "What is the speaker’s position?",
+    "options": [
+      "The scheme had no effect.",
+      "The reporting change had no effect.",
+      "The result is promising but causation is uncertain.",
+      "The figures were deliberately inaccurate."
+    ],
+    "key": [
+      "The result is promising but causation is uncertain."
+    ],
+    "stimulus": null,
+    "audio": "/audio/l6.mp3",
+    "kind": "single",
+    "active": true
+  },
+  {
+    "id": "w1",
+    "skill": "writing",
+    "difficulty": 3,
+    "topic": "Fikrni rivojlantirish",
+    "prompt": "Write 90–130 words. A friend is deciding whether to study alone or join an English group. Explain which option you recommend and give two reasons.",
+    "options": null,
+    "key": null,
+    "stimulus": null,
+    "audio": null,
+    "kind": "writing",
+    "active": true
+  },
+  {
+    "id": "w2",
+    "skill": "writing",
+    "difficulty": 4,
+    "topic": "Dalillash",
+    "prompt": "Write 180–240 words. Some schools allow students to use phones during lessons. Discuss one benefit and one drawback, and give your own opinion.",
+    "options": null,
+    "key": null,
+    "stimulus": null,
+    "audio": null,
+    "kind": "writing",
+    "active": true
+  },
+  {
+    "id": "s1",
+    "skill": "speaking",
+    "difficulty": 3,
+    "topic": "Ravonlik",
+    "prompt": "Record 45–90 seconds. Describe a skill you learned. Explain why you chose it, what was difficult, and how you improved.",
+    "options": null,
+    "key": null,
+    "stimulus": null,
+    "audio": null,
+    "kind": "speaking",
+    "active": true
+  },
+  {
+    "id": "s2",
+    "skill": "speaking",
+    "difficulty": 4,
+    "topic": "Fikrni asoslash",
+    "prompt": "Record 60–120 seconds. Do people learn better online or face-to-face? Compare the two approaches and support your view with an example.",
+    "options": null,
+    "key": null,
+    "stimulus": null,
+    "audio": null,
+    "kind": "speaking",
+    "active": true
+  }
+]
