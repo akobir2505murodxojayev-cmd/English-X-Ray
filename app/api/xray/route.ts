@@ -271,9 +271,9 @@ export async function POST(req:NextRequest){
    const target=found(await read(c.from('users').select('deletion_requested_at').eq('id',id).maybeSingle()))
    if(!target.deletion_requested_at) return fail(409,'O‘chirish so‘rovi topilmadi.')
    const storage=c.storage.from('xray-recordings')
-   const sessions=await read(c.from('diagnostic_sessions').select('id').eq('user_id',id).limit(1000))
-   for(const session of sessions??[]){
-    const path=id+'/'+session.id
+   const sessions=found(await read(storage.list(id,{limit:1000})))
+   for(const session of sessions){
+    const path=id+'/'+session.name
     const folders=found(await read(storage.list(path,{limit:1000})))
     for(const folder of folders){
      const sub=path+'/'+folder.name

@@ -2,6 +2,8 @@
 
 Telegram Mini App for an English diagnostic, a personalized eight-week study plan, and course applications. Includes a Telegram registration bot, Supabase migrations, and a role-gated admin dashboard. Interface text is in Uzbek Latin.
 
+[Diagnostic MVP setup](docs/diagnostic-mvp.md) covers the new default Telegram flow. The prior interface is at `/classic`.
+
 ## Run locally
 
 Requires Node.js 24 and npm.
@@ -17,7 +19,7 @@ npx playwright install chromium
 npm run e2e
 ```
 
-Open the home URL in a browser and select the demo. Demo state stays in browser storage. The demo has its own question bank, uses sample progress data, and does not send real enrollments or bot messages. Set `XRAY_SCREENSHOTS` to an output folder to capture all 14 mobile screens in Playwright. `CHROMIUM_EXECUTABLE` can select a local headless Chromium binary.
+Open `/classic` in a browser and select the demo. Demo state stays in browser storage. The demo has its own question bank, uses sample progress data, and does not send real enrollments or bot messages. Set `XRAY_SCREENSHOTS` to an output folder to capture all 14 mobile screens in Playwright. `CHROMIUM_EXECUTABLE` can select a local headless Chromium binary.
 
 ## Supabase
 

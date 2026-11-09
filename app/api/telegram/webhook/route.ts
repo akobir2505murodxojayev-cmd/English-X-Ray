@@ -1,14 +1,15 @@
 import {z} from 'zod'
-import {equal} from '../../../../lib/auth'
+import {equal,normalizePhone} from '../../../../lib/auth'
 import {adminChats,db,handle,read,response} from '../../../../lib/db'
 import {queueNotifications,telegram} from '../../../../lib/jobs'
 import {advance} from '../../../../lib/registration'
 import {after} from 'next/server'
+import {actor,latest,miniButton,reportBody} from '../../../../lib/mvp/server'
 
 const user=z.object({id:z.number().int().positive(),first_name:z.string(),last_name:z.string().optional(),username:z.string().optional()})
 const chat=z.object({id:z.number().int(),type:z.string()})
 const update=z.object({
- update_id:z.number().int(),message:z.object({from:user.optional(),chat,text:z.string().max(4096).optional(),contact:z.object({user_id:z.number().int().optional(),phone_number:z.string().max(50)}).optional()}).optional(),
+ update_id:z.number().int(),message:z.object({from:user.optional(),chat,text:z.string().max(4096).optional(),contact:z.object({user_id:z.number().int().optional(),phone_number:z.string().max(50)}).optional(),voice:z.object({file_id:z.string().max(200),duration:z.number().int().max(120),file_size:z.number().optional()}).optional()}).optional(),
  callback_query:z.object({id:z.string(),from:user,data:z.string().optional(),message:z.object({chat}).optional()}).optional()
 })
 export async function POST(req:Request){
@@ -21,7 +22,34 @@ export async function POST(req:Request){
   const {message,callback_query:cb,update_id:id}=parsed.data
   const u=cb?.from??message?.from,room=cb?.message?.chat??message?.chat
   if(!u||room?.type!=='private'||room.id!==u.id) return response({ok:true})
-  const client=db(),txt=cb?.data??message?.text??''
+  const client=db(),incoming=cb?.data??message?.text??''
+  const cmd=incoming.split(/\s/,1)[0].split('@')[0].toLowerCase()
+  const txt=cmd==='/delete_my_data'?'/delete':incoming
+  const source=cmd==='/start'?incoming.trim().split(/\s+/)[1]??'':''
+  const phone=message?.contact?.user_id===u.id&&message.contact?normalizePhone(message.contact.phone_number):null
+  const voice=message?.voice&&message.voice.duration<=60&&(message.voice.file_size??0)<=3500000?message.voice.file_id:null
+  const action=['/start','/help','/test'].includes(cmd)?'start':cmd==='/stop'?'stop':cmd==='/results'?'report':phone?'contact':voice?'voice':null
+  if(action){
+   const welcome={text:'SANDBOX LC · ENGLISH X-RAY\n\nIngliz tilingizning rentgeni\n20 daqiqada qaysi ko‘nikma sizni to‘xtatayotganini va qaysi mavzularda mashq kerakligini bilib oling.\n\n1. Diagnostika\n2. Tahlil\n3. Keyingi qadam',reply_markup:{inline_keyboard:[[{text:'Diagnostikani boshlash',web_app:{url}}],[{text:'Qanday ishlaydi?',callback_data:'mvp:help'},{text:'Sandbox LC haqida',callback_data:'mvp:about'}]]}}
+   let reply=action==='start'?welcome:action==='stop'?{text:'Keyingi eslatmalar o‘chirildi. Hisobotingiz Mini App ichida ochiladi.',reply_markup:miniButton('English X-Ray',url)}:action==='contact'?{text:'Raqam qabul qilindi. To‘liq tahlil ochildi.',reply_markup:miniButton('Hisobotni ochish',url)}:action==='voice'?{text:'Ovoz qabul qilindi. Uni metodist ko‘rib chiqadi.',reply_markup:miniButton('Natijaga o‘tish',url)}:null
+   if(action==='report'){
+    const account=await actor(u.id)
+    const run=account&&!account.deletion_requested_at?await latest(account.id):null
+    if(run) reply=['report','booked'].includes(run.state.step)?reportBody(run.state,url):{text:'Natijani ko‘rish uchun Mini App’ni oching.',reply_markup:miniButton('English X-Ray',url)}
+   }
+   if(reply){
+    const done=await read(client.rpc('xr_mvp_bot',{p_telegram:u.id,p_update:id,p_action:action,p_source:/^[A-Za-z0-9_-]{1,64}$/.test(source)?source:null,p_phone:phone,p_voice:voice,p_reply:reply}))
+    if(done){queueNotifications('reply:'+id);return response({ok:true})}
+    if(action==='voice')return response({ok:true})
+   }
+  }
+  if(cb&&incoming.startsWith('mvp:')){
+   const reply={text:incoming==='mvp:help'?'Test → ko‘nikmalar xaritasi → tahlil. To‘liq tahlil testdan so‘ng ochiladi.':'English X-Ray — Sandbox LC diagnostikasi. Natijalar keyingi o‘quv qadamini tanlashga yordam beradi.',reply_markup:miniButton('Diagnostikani boshlash',url)}
+   await read(client.rpc('xr_mvp_bot',{p_telegram:u.id,p_update:id,p_action:'info',p_source:null,p_phone:null,p_voice:null,p_reply:reply}))
+   after(async()=>{try{await telegram().answerCallbackQuery(cb.id)}catch{}})
+   queueNotifications('reply:'+id)
+   return response({ok:true})
+  }
   for(let i=0;i<3;i++){
    const [session,profile]=await Promise.all([
     read(client.from('registration_sessions').select('*').eq('telegram_id',u.id).maybeSingle()),

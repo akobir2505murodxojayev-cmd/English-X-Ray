@@ -12,9 +12,13 @@ export async function flushNotifications(prefix?:string){
  if(!process.env.TELEGRAM_BOT_TOKEN) return
  const client=db(),api=telegram()
  const rows=await read(client.rpc('xr_claim_notifications',{p_prefix:prefix??null}))??[]
- await Promise.all(rows.map(async (row:{id:string;chat_id:number;body:{text:string;reply_markup?:Parameters<Api['sendMessage']>[2] extends infer P ? NonNullable<P> extends {reply_markup?:infer M}?M:never:never}})=>{
+ await Promise.all(rows.map(async (row:{id:string;chat_id:number;body:{text:string;photo?:string;reply_markup?:Parameters<Api['sendMessage']>[2] extends infer P ? NonNullable<P> extends {reply_markup?:infer M}?M:never:never}})=>{
   try{
-   await api.sendMessage(row.chat_id,row.body.text,{reply_markup:row.body.reply_markup})
+   if(row.body.photo){
+    const markup=row.body.reply_markup
+    try{await api.sendPhoto(row.chat_id,row.body.photo,{caption:row.body.text,reply_markup:markup&&'inline_keyboard' in markup?markup:undefined})}
+    catch{await api.sendMessage(row.chat_id,row.body.text,{reply_markup:markup})}
+   }else await api.sendMessage(row.chat_id,row.body.text,{reply_markup:row.body.reply_markup})
    await read(client.from('telegram_notifications').update({sent_at:new Date().toISOString(),body:{}}).eq('id',row.id))
   }catch{console.warn('xray Telegram delivery pending')}
  }))

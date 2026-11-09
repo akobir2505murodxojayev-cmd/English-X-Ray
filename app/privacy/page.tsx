@@ -1,4 +1,11 @@
 import Link from 'next/link'
 export default function Privacy() {
-  return <main className="shell legal"><h1>Maxfiylik · v1</h1><p>Sandbox LC English X-Ray profilingiz, aloqa ma’lumotlaringiz va test javoblaringizdan diagnostika, o‘quv reja va siz so‘ragan xizmatlarni ko‘rsatish uchun foydalanadi. Ovozli javoblarni faqat baholash uchun yuboring. Ularni vakolatli baholovchi ko‘rishi mumkin.</p><p>AI Mentordan foydalansangiz, xabaringiz va tegishli o‘quv konteksti javob tayyorlash uchun sozlangan AI xizmatiga yuboriladi. Telefon raqamingizni, uy manzilingizni va boshqa maxfiy ma’lumotlarni chatda yozmang.</p><p>Kurs xabarlari uchun rozilik ixtiyoriy. Uni profil sozlamalaridan o‘zgartiring. Hisobni o‘chirish uchun profildagi maxfiylik bo‘limidan yoki botdagi /delete buyrug‘idan foydalaning. Kurs arizasi uchun bog‘lanishga alohida rozilik olinadi.</p><p>Voyaga yetmagan bo‘lsangiz, ro‘yxatdan o‘tishni ota-ona yoki vasiy bilan yakunlang.</p><Link href="/">English X-Ray’ga qaytish</Link></main>
+ return <main className="shell legal">
+  <h1>Maxfiylik · English X-Ray</h1>
+  <p>Sandbox LC diagnostika natijasini tayyorlash uchun Telegram ID, ism, username, yosh toifasi va test javoblaridan foydalanadi. Telefon raqami to‘liq hisobotni ochish bosqichida olinadi. X-Ray Full so‘rovini yuborsangiz, menejer siz bilan shu raqam orqali bog‘lanadi.</p>
+  <p>Speaking ixtiyoriy va 18 yoshga to‘lgan foydalanuvchilar uchun ochiq. Yozuvni vakolatli metodist tahlil qiladi. 18 yoshdan kichik foydalanuvchi uchun ota-ona yoki vasiy roziligi kerak.</p>
+  <p>Botdan keyingi tavsiyalarni olish ixtiyoriy. Ularni o‘chirish uchun botga <code>/stop</code>, ma’lumotlaringizni o‘chirishni so‘rash uchun <code>/delete_my_data</code> yuboring.</p>
+  <p>Avvalgi ilovada AI Mentordan foydalansangiz, xabaringiz va tegishli o‘quv konteksti javob tayyorlash uchun sozlangan AI xizmatiga yuboriladi.</p>
+  <Link href="/">English X-Ray’ga qaytish</Link>
+ </main>
 }

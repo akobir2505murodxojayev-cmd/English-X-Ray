@@ -1,2 +1,2 @@
-import Xray from './xray'
-export default function Page(){return <Xray/>}
+import Mvp from './mvp'
+export default function Page(){return <Mvp/>}

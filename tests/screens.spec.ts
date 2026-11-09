@@ -9,7 +9,7 @@ async function capture(page:Page,name:string){
 test('walks through all fourteen mobile screens and submits a preview test and enrollment',async({page})=>{
  const errors:string[]=[]
  page.on('pageerror',e=>errors.push(e.message))
- await page.goto('/')
+ await page.goto('/classic')
  await expect(page.getByRole('button',{name:'Namoyishni boshlash'})).toBeEnabled()
  await capture(page,'01-welcome')
  await page.getByRole('button',{name:'Namoyishni boshlash'}).click()
@@ -58,7 +58,7 @@ test('walks through all fourteen mobile screens and submits a preview test and e
  await page.getByRole('button',{name:'Arizani yuborish'}).click()
  await expect(page.getByText('Sinov arizasi saqlandi.')).toBeVisible()
  const go=async(screen:string,heading:RegExp)=>{
-  await page.goto('/?screen='+screen)
+  await page.goto('/classic?screen='+screen)
   await page.getByRole('button',{name:'Namoyishni boshlash'}).click()
   await expect(page.getByRole('heading',{name:heading})).toBeVisible()
  }
@@ -82,7 +82,7 @@ test('walks through all fourteen mobile screens and submits a preview test and e
 })
 test('320px viewport fits and anonymous access cannot call protected APIs',async({page,request})=>{
  await page.setViewportSize({width:320,height:700})
- await page.goto('/')
+ await page.goto('/classic')
  await page.getByRole('button',{name:'Namoyishni boshlash'}).click()
  await expect(page.getByRole('heading',{name:/Salom/})).toBeVisible()
  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(320)

@@ -1,1 +1,1 @@
-{"framework":"nextjs","regions":["syd1"],"crons":[{"path":"/api/jobs","schedule":"0 3 * * *"}]}
+{"framework":"nextjs","regions":["syd1"],"crons":[{"path":"/api/jobs","schedule":"0 3 * * *"},{"path":"/api/mvp/follow-up","schedule":"0 5 * * *"}]}
